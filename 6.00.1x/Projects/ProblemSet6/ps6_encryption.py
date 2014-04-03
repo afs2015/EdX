@@ -5,9 +5,13 @@
 import string
 import random
 
+<<<<<<< HEAD
 from string import ascii_lowercase as lower, ascii_uppercase as upper, ascii_letters as both
 
 WORDLIST_FILENAME = "C:/Users/Apache/Documents/GitHub/EdX/6.00.1x/Projects/ProblemSet6/words.txt"
+=======
+WORDLIST_FILENAME = "words.txt"
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 # -----------------------------------
 # Helper code
@@ -15,7 +19,11 @@ WORDLIST_FILENAME = "C:/Users/Apache/Documents/GitHub/EdX/6.00.1x/Projects/Probl
 def loadWords():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
     Depending on the size of the word list, this function may
     take a while to finish.
     """
@@ -47,7 +55,11 @@ def randomWord(wordList):
     """
     Returns a random word.
 
+<<<<<<< HEAD
     wordList: list of words  
+=======
+    wordList: list of words
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
     returns: a word from wordList at random
     """
     return random.choice(wordList)
@@ -101,8 +113,35 @@ def buildCoder(shift):
     shift: 0 <= int < 26
     returns: dict
     """
+<<<<<<< HEAD
     return dict(zip(both, (lower[shift:] + lower[:shift] + upper[shift:] + upper[:shift])))
     
+=======
+    assert type(shift) == int
+    shifted = dict()
+    for letter in string.ascii_lowercase:
+        temp = ord(letter) + shift
+        if temp > 122:
+            temp -= 26
+            shifted[letter] = chr(temp)
+        elif temp < 97:
+            temp += 26
+            shifted[letter] = chr(temp)
+        else:
+            shifted [letter] = chr(temp)
+    for letter in string.ascii_uppercase:
+        temp = ord(letter) + shift
+        if temp > 90:
+            temp -= 26
+            shifted[letter] = chr(temp)
+        elif temp < 65:
+            temp += 26
+            shifted[letter] = chr(temp)
+        else:
+            shifted [letter] = chr(temp)
+    return shifted
+
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 def applyCoder(text, coder):
     """
     Applies the coder to the text. Returns the encoded text.
@@ -111,8 +150,19 @@ def applyCoder(text, coder):
     coder: dict with mappings of characters to shifted characters
     returns: text after mapping coder chars to original text
     """
+<<<<<<< HEAD
     ### TODO.
     return "Not yet implemented." # Remove this comment when you code the function
+=======
+    assert type(text) == str and type(coder) == dict
+    temp = ""
+    for char in text:
+        if char in coder:
+            temp += coder[char]
+        else:
+            temp += char
+    return temp
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 def applyShift(text, shift):
     """
@@ -125,9 +175,14 @@ def applyShift(text, shift):
     shift: amount to shift the text (0 <= int < 26)
     returns: text after being shifted by specified amount.
     """
+<<<<<<< HEAD
     ### TODO.
     ### HINT: This is a wrapper function.
     return "Not yet implemented." # Remove this comment when you code the function
+=======
+    assert type(text) == str and type(shift) == int
+    return applyCoder(text, buildCoder(shift))
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 #
 # Problem 2: Decryption
@@ -139,8 +194,25 @@ def findBestShift(wordList, text):
     text: string
     returns: 0 <= int < 26
     """
+<<<<<<< HEAD
     ### TODO
     return "Not yet implemented." # Remove this comment when you code the function
+=======
+    assert type(wordList) == list and type(text) == str
+    validWords = 0
+    bestShift = -1
+    for i in range(0, 26):
+        tempvalidWords = 0
+        temp = applyShift(text, i)
+        words = temp.split(' ')
+        for j in words:
+            if isWord(wordList, j):
+                tempvalidWords += 1
+        if validWords < tempvalidWords:
+            validWords = tempvalidWords
+            bestShift = i
+    return bestShift
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 def decryptStory():
     """
@@ -151,14 +223,21 @@ def decryptStory():
 
     returns: string - story in plain text
     """
+<<<<<<< HEAD
     ### TODO.
     return "Not yet implemented." # Remove this comment when you code the function
+=======
+    text = getStoryString()
+    shift = findBestShift(loadWords(), text)
+    return applyShift(text, shift)
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 #
 # Build data structures used for entire session and run encryption
 #
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     # To test findBestShift:
     wordList = loadWords()
     s = applyShift('Hello, world!', 8)
@@ -166,3 +245,15 @@ if __name__ == '__main__':
     # assert applyShift(s, bestShift) == 'Hello, world!'
     # To test decryptStory, comment the above four lines and uncomment this line:
     #    decryptStory()
+=======
+    # # To test findBestShift:
+    # wordList = loadWords()
+    # s = applyShift('Hello, world!', 8)
+    # bestShift = findBestShift(wordList, s)
+    # assert applyShift(s, bestShift) == 'Hello, world!'
+    # # To test decryptStory, comment the above four lines and uncomment this line:
+    print decryptStory()
+    # print applyShift('Bpqa qa i bmab.', 18)
+
+    # print findBestShift(wordList, 'Pmttw, ewztl!')
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979

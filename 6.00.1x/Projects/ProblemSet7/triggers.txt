@@ -4,6 +4,7 @@
 # Problem 11: 
 
 # subject trigger named t1
+<<<<<<< HEAD
 t1 SUBJECT pope
 
 # title trigger named t2
@@ -11,6 +12,15 @@ t2 TITLE Mandela
 
 # phrase trigger named t3
 t3 PHRASE Pope
+=======
+t1 SUBJECT world
+
+# title trigger named t2
+t2 TITLE Intel
+
+# phrase trigger named t3
+t3 PHRASE New York City
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 # composite trigger named t4
 t4 AND t2 t3

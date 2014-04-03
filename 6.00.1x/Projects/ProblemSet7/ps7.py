@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# 6.00.1x Problem Set 7
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 # RSS Feed Filter
 
 import feedparser
@@ -8,6 +12,11 @@ from Tkinter import *
 
 
 #-----------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+#
+# Problem Set 7
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 #======================
 # Code for retrieving and parsing RSS feeds
@@ -41,6 +50,7 @@ def process(url):
 # Data structure design
 #======================
 
+<<<<<<< HEAD
 class NewsStory(object):
     def __init__(self, rss_guid, rss_title, rss_subject, rss_summary, rss_link):
         self.rss_guid = rss_guid
@@ -69,6 +79,32 @@ class NewsStory(object):
         # Getter method for a NewsStory object's rss subject.
         return self.rss_link
 
+=======
+# Problem 1
+
+class NewsStory(object):
+    def __init__(self, guid, title, subject, summary, link):
+        self.guid = guid
+        self.title = title
+        self.subject = subject
+        self.summary = summary
+        self.link = link
+
+    def getGuid(self):
+        return self.guid
+
+    def getTitle(self):
+        return self.title
+
+    def getSubject(self):
+        return self.subject
+
+    def getSummary(self):
+        return self.summary
+
+    def getLink(self):
+        return self.link
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 #======================
 # Part 2
@@ -84,6 +120,7 @@ class Trigger(object):
         raise NotImplementedError
 
 # Whole Word Triggers
+<<<<<<< HEAD
 
 class WordTrigger(Trigger):
 
@@ -114,23 +151,54 @@ class WordTrigger(Trigger):
 
 class TitleTrigger(WordTrigger):
 
+=======
+# Problems 2-5
+
+class WordTrigger(Trigger):
+    def __init__(self, word):
+        self.word = word.lower()
+
+    def isWordIn(self, text):
+        text = text.lower()
+        for char in string.punctuation:
+            text = text.replace(char, " ")
+        tmp = text.split(" ")
+        if self.word in tmp:
+            return True
+        else:
+            return False
+
+class TitleTrigger(WordTrigger):
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
     def evaluate(self, story):
         return self.isWordIn(story.getTitle())
 
 class SubjectTrigger(WordTrigger):
+<<<<<<< HEAD
 
+=======
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
     def evaluate(self, story):
         return self.isWordIn(story.getSubject())
 
 class SummaryTrigger(WordTrigger):
+<<<<<<< HEAD
 
+=======
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
     def evaluate(self, story):
         return self.isWordIn(story.getSummary())
 
 # Composite Triggers
+<<<<<<< HEAD
 
 class NotTrigger(Trigger):
 
+=======
+# Problems 6-8
+
+class NotTrigger(Trigger):
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
     def __init__(self, trigger):
         self.trigger = trigger
 
@@ -138,6 +206,7 @@ class NotTrigger(Trigger):
         return not self.trigger.evaluate(story)
 
 class AndTrigger(Trigger):
+<<<<<<< HEAD
 
     def __init__(self, *trigger):
         self.trigger = trigger
@@ -170,6 +239,47 @@ class PhraseTrigger(Trigger):
         return self.phrase in story.getSummary() or \
                self.phrase in story.getTitle() or \
                self.phrase in story.getSubject()
+=======
+    def __init__(self, trigger1, trigger2):
+        self.trigger1 = trigger1
+        self.trigger2 = trigger2
+
+    def evaluate(self, story):
+        if self.trigger1.evaluate(story) and \
+            self.trigger2.evaluate(story):
+            return True
+        else:
+            return False
+
+class OrTrigger(Trigger):
+    def __init__(self, trigger1, trigger2):
+        self.trigger1 = trigger1
+        self.trigger2 = trigger2
+
+    def evaluate(self, story):
+        if self.trigger1.evaluate(story) or \
+            self.trigger2.evaluate(story):
+            return True
+        else:
+            return False
+
+
+# Phrase Trigger
+# Question 9
+
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase):
+        self.phrase = phrase
+
+    def evaluate(self, story):
+        if self.phrase in story.getTitle() or \
+            self.phrase in story.getSubject() or \
+            self.phrase in story.getSummary():
+            return True
+        else:
+            return False
+
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 #======================
 # Part 3
@@ -182,6 +292,7 @@ def filterStories(stories, triggerlist):
 
     Returns: a list of only the stories for which a trigger in triggerlist fires.
     """
+<<<<<<< HEAD
     # TODO: Problem 10
     # This is a placeholder (we're just returning all the stories, with no filtering)
     
@@ -194,6 +305,14 @@ def filterStories(stories, triggerlist):
                 break
 
     return filteredStories
+=======
+    tmp = []
+    for story in stories:
+        for trigger in triggerlist:
+            if trigger.evaluate(story) and not story in tmp:
+                tmp.append(story)
+    return tmp
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 #======================
 # Part 4
@@ -215,6 +334,7 @@ def makeTrigger(triggerMap, triggerType, params, name):
 
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
+<<<<<<< HEAD
     # TODO: Problem 11
     
     triggerType=triggerType.upper()
@@ -241,6 +361,31 @@ def makeTrigger(triggerMap, triggerType, params, name):
         triggerMap[name] = PhraseTrigger(' '.join(params))
 
     return triggerMap[name]
+=======
+    if triggerType == "TITLE":
+        triggerMap[name] = TitleTrigger(" ".join(params))
+        return triggerMap[name]
+    elif triggerType == "SUBJECT":
+        triggerMap[name] = SubjectTrigger(" ".join(params))
+        return triggerMap[name]
+    elif triggerType == "SUMMARY":
+        triggerMap[name] = SummaryTrigger(" ".join(params))
+        return triggerMap[name]
+    elif triggerType == "NOT":
+        triggerMap[name] = NotTrigger(triggerMap[params[0]])
+        return triggerMap[name]
+    elif triggerType == "AND":
+        triggerMap[name] = AndTrigger(triggerMap[params[0]], \
+            triggerMap[params[1]])
+        return triggerMap[name]
+    elif triggerType == "OR":
+        triggerMap[name] = OrTrigger(triggerMap[params[0]], \
+            triggerMap[params[1]])
+        return triggerMap[name]
+    elif triggerType == "PHRASE":
+        triggerMap[name] = PhraseTrigger(" ".join(params))
+        return triggerMap[name]
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
 def readTriggerConfig(filename):
     """
@@ -280,7 +425,11 @@ def readTriggerConfig(filename):
                 triggers.append(triggerMap[name])
 
     return triggers
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 import thread
 
 SLEEPTIME = 60 #seconds -- how often we poll
@@ -296,17 +445,28 @@ def main_thread(master):
         t3 = PhraseTrigger("Election")
         t4 = OrTrigger(t2, t3)
         triggerlist = [t1, t4]
+<<<<<<< HEAD
         
         # TODO: Problem 11
         # After implementing makeTrigger, uncomment the line below:
         triggerlist = readTriggerConfig("C:/Users/Apache/Documents/GitHub/EdX/6.00.1x/Projects/ProblemSet7/triggers.txt")
+=======
+
+        # TODO: Problem 11
+        # After implementing makeTrigger, uncomment the line below:
+        # triggerlist = readTriggerConfig("triggers.txt")
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
 
         # **** from here down is about drawing ****
         frame = Frame(master)
         frame.pack(side=BOTTOM)
         scrollbar = Scrollbar(master)
         scrollbar.pack(side=RIGHT,fill=Y)
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 595447144f6bca0ee61e60c1fb356dc9ac4de979
         t = "Google & Yahoo Top News"
         title = StringVar()
         title.set(t)
